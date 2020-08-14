@@ -36,10 +36,7 @@ firebase.auth().onAuthStateChanged(function (user) {
       if (snapshot.val() == null) {
         firebase
           .database()
-          .ref("users/" + user.uid)
-          .set({
-            itemCount: 0,
-          });
+          .ref("users/" + user.uid);
       }
     });
   } else {
