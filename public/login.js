@@ -14,7 +14,6 @@ function signOut() {
 }
 
 firebase.auth().onAuthStateChanged(function (user) {
-  console.log("HI");
   if (user) {
     // User is signed in.
     var displayName = user.displayName;
@@ -33,9 +32,7 @@ firebase.auth().onAuthStateChanged(function (user) {
       .removeEventListener("click", signIn);
     document.getElementById("login-button").addEventListener("click", signOut);
     var itemCount = firebase.database().ref("users/" + user.uid + "/itemCount");
-    console.log("HI");
     itemCount.on("value", function (snapshot) {
-      console.log("HI");
       if (snapshot.val() == null) {
         firebase
           .database()
@@ -52,13 +49,6 @@ firebase.auth().onAuthStateChanged(function (user) {
       .getElementById("login-button")
       .removeEventListener("click", signOut);
     document.getElementById("login-button").addEventListener("click", signIn);
-    // document.getElementById('quickstart-sign-in-status').textContent = 'Signed out';
-    // document.getElementById('quickstart-sign-in').textContent = 'Sign in with Google';
-    // document.getElementById('quickstart-account-details').textContent = 'null';
-    // document.getElementById('quickstart-oauthtoken').textContent = 'null';
   }
-  //document.getElementById('quickstart-sign-in').disabled = false;
 });
 
-console.log("???");
-//document.getElementById("login-button").addEventListener("click", signIn);
