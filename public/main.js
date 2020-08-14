@@ -10,15 +10,33 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 
-function addValues(userID, type, value) {
-    firebase.database().ref(userID+'/'+type).once('value').then( snap => {
+function completeGoal(userID, goalName) {
+    var update = {};
+    update['complete'] = true;
+    firebase.database().ref('users/' + userID + '/goals/' + goalName).update(update);
+};
+
+function createGoal(userID, goalName, goalType) {
+    firebase.database().ref('users/' + userID + '/goals/').set({
+        'complete' : false,
+        'type': goalType
+    })
+};
+
+function changeEcosystemState(userID, stateName, value) {
+    firebase.database().ref('users/' + userID + '/ecosystemState/' + stateName).once('value').then( snap => {
         let currentValue = snap.val();
-        console.log("current value "+currentValue);
         var updates = {};
-        updates[type] = value+currentValue;
-        firebase.database().ref(userID).update(updates);
+        updates[stateName] = value+currentValue;
+        firebase.database().ref('users/' + userID + '/ecosystemState').update(updates);
     });
-}
+};
+
+function setLogonDate(userID, date) {
+    var update = {};
+    update['date'] = date;
+    firebase.database().ref('users/' + userID + '/lastLogon/').update(update);
+};
 
 firebase.database().ref('/').on('value', snap => {
     //update pictures
