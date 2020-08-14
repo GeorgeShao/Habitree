@@ -23,22 +23,20 @@ firebase.auth().onAuthStateChanged(function (user) {
     var isAnonymous = user.isAnonymous;
     var uid = user.uid;
     var providerData = user.providerData;
-    // document.getElementById('quickstart-sign-in-status').textContent = 'Signed in';
-    // document.getElementById('quickstart-sign-in').textContent = 'Sign out';
-    // document.getElementById('quickstart-account-details').textContent = JSON.stringify(user, null, '  ');
     document.getElementById("login-button").innerHTML = logoutBtnHtml;
     document
       .getElementById("login-button")
       .removeEventListener("click", signIn);
     document.getElementById("login-button").addEventListener("click", signOut);
-    var itemCount = firebase.database().ref("users/" + user.uid + "/itemCount");
-    itemCount.on("value", function (snapshot) {
-      if (snapshot.val() == null) {
-        firebase
-          .database()
-          .ref("users/" + user.uid);
-      }
-    });
+    if(getLogonDate(uid) == null){
+        // initialize account
+        createGoal(uid, "use a bicycle instead of driving", "a");
+        createGoal(uid, "put something in the recycling bin", "l");
+        createGoal(uid, "don't use a disposable plastic waterbottle", "w");
+        createGoal(uid, "walk outside for at least 15 mins"), "l";
+    } else {
+        // check if its been one day since last logon
+    }
   } else {
     // User is signed out.
     document.getElementById("login-button").innerHTML = loginBtnHtml;
