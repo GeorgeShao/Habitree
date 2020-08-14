@@ -17,11 +17,17 @@ function completeGoal(userID, goalName) {
 };
 
 function createGoal(userID, goalName, goalType) {
-    firebase.database().ref('users/' + userID + '/goals/').set({
+    firebase.database().ref('users/' + userID + '/goals/' + goalName).set({
         'complete' : false,
         'type': goalType
-    })
+    });
 };
+
+/*function getGoals(userID) {
+    firebase.database().ref('users/' + userID + '/goals/').once('value').then( snap => {
+        
+    });
+}*/
 
 function changeEcosystemState(userID, stateName, value) {
     firebase.database().ref('users/' + userID + '/ecosystemState/' + stateName).once('value').then( snap => {
@@ -32,10 +38,16 @@ function changeEcosystemState(userID, stateName, value) {
     });
 };
 
+function getLogonDate(userID) {
+    firebase.database().ref('users/' + userID).once('value').then( snap => {
+        return snap.val();
+    });
+};
+
 function setLogonDate(userID, date) {
     var update = {};
-    update['date'] = date;
-    firebase.database().ref('users/' + userID + '/lastLogon/').update(update);
+    update['lastLogon'] = date;
+    firebase.database().ref('users/' + userID).update(update);
 };
 
 firebase.database().ref('/').on('value', snap => {
