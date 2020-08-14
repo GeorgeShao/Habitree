@@ -30,9 +30,10 @@ firebase.auth().onAuthStateChanged(function (user) {
     document.getElementById("login-button").addEventListener("click", signOut);
     if(getLogonDate(uid) == null){
         // initialize account
-        createGoal(uid, "use a bicycle instead of driving");
-        createGoal(uid, "put something in the recycling bin");
-        createGoal(uid, "walk outside for at least 15 mins");
+        createGoal(uid, "use a bicycle instead of driving", "a");
+        createGoal(uid, "put something in the recycling bin", "l");
+        createGoal(uid, "don't use a disposable plastic waterbottle", "w");
+        createGoal(uid, "walk outside for at least 15 mins"), "l";
     } else {
         // check if its been one day since last logon
     }
