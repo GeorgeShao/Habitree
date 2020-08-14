@@ -23,14 +23,19 @@ firebase.auth().onAuthStateChanged(function (user) {
     var isAnonymous = user.isAnonymous;
     var uid = user.uid;
     var providerData = user.providerData;
-    // document.getElementById('quickstart-sign-in-status').textContent = 'Signed in';
-    // document.getElementById('quickstart-sign-in').textContent = 'Sign out';
-    // document.getElementById('quickstart-account-details').textContent = JSON.stringify(user, null, '  ');
     document.getElementById("login-button").innerHTML = logoutBtnHtml;
     document
       .getElementById("login-button")
       .removeEventListener("click", signIn);
     document.getElementById("login-button").addEventListener("click", signOut);
+    if(getLogonDate(uid) == null){
+        // initialize account
+        createGoal(uid, "use a bicycle instead of driving");
+        createGoal(uid, "put something in the recycling bin");
+        createGoal(uid, "walk outside for at least 15 mins");
+    } else {
+        // check if its been one day since last logon
+    }
   } else {
     // User is signed out.
     document.getElementById("login-button").innerHTML = loginBtnHtml;
