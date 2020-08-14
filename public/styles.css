@@ -1,3 +1,7 @@
 #login-button:hover {
   color: lightgray;
 }
+
+.goals {
+  list-style-type: none;
+}
