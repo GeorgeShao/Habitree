@@ -31,14 +31,6 @@ firebase.auth().onAuthStateChanged(function (user) {
       .getElementById("login-button")
       .removeEventListener("click", signIn);
     document.getElementById("login-button").addEventListener("click", signOut);
-    var itemCount = firebase.database().ref("users/" + user.uid + "/itemCount");
-    itemCount.on("value", function (snapshot) {
-      if (snapshot.val() == null) {
-        firebase
-          .database()
-          .ref("users/" + user.uid);
-      }
-    });
   } else {
     // User is signed out.
     document.getElementById("login-button").innerHTML = loginBtnHtml;
