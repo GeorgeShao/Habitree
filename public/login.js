@@ -47,7 +47,7 @@ firebase.auth().onAuthStateChanged(function (user) {
           if(lastLogonDateObj.getMonth() - date.getMonth() < 1){
             if(lastLogonDateObj.getDate() - date.getDate() < 1){
               setLogonDate(uid, Date.now());
-              console.log("no date change needed")
+              console.log("no goal change needed")
             } else {
               setLogonDate(uid, Date.now());
               changeGoal(uid, "use a bicycle instead of driving", "false");
