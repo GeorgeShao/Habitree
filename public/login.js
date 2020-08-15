@@ -44,8 +44,8 @@ firebase.auth().onAuthStateChanged(function (user) {
       } else {
         // check if its been one day since last logon
         console.log(lastLogon);
-        lastLogonDateObj = new Date(lastLogon * 1000)
-        currentDate = new Date();
+        let lastLogonDateObj = new Date(lastLogon * 1000)
+        let currentDate = new Date();
         if(lastLogonDateObj.getFullYear() - currentDate.getFullYear() < 1){
           if(lastLogonDateObj.getMonth() - currentDate.getMonth() < 1){
             if(lastLogonDateObj.getDate() - currentDate.getDate() < 1){
