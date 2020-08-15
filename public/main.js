@@ -50,11 +50,10 @@ function getLogonDate(userID) {
     
     firebase.database().ref('users/' + userID).once('value').then(snap => {
         ret = snap.val().lastLogon;
-        console.log("last logon (callback): " + ret);
     });
     
     setTimeout(function() {
-        console.log("last logon (main.js): " + ret);
+        console.log("last logon (from firebase): " + ret);
         return ret;
     }, 500);
 };

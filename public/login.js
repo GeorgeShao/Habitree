@@ -28,7 +28,8 @@ firebase.auth().onAuthStateChanged(function (user) {
       .getElementById("login-button")
       .removeEventListener("click", signIn);
     document.getElementById("login-button").addEventListener("click", signOut);
-    if(getLogonDate(uid) == null){
+    lastLogonDate = getLogonDate(uid)
+    if(lastLogonDate == null){
         // initialize account
         createGoal(uid, "use a bicycle instead of driving", "a");
         createGoal(uid, "put something in the recycling bin", "l");
@@ -38,9 +39,36 @@ firebase.auth().onAuthStateChanged(function (user) {
         createEcosystemState(uid, "clouds", 5);
         createEcosystemState(uid, "lake", 5);
         setLogonDate(uid, Date.now());
-        //console.log("logon (login.js): " + getLogonDate(uid));
     } else {
-        // check if its been one day since last logon
+      // check if its been one day since last logon
+        lastLogonDateObj = new Date(lastLogonDate * 1000)
+        date = Date.now()
+        if(lastLogonDateObj.getFullYear() - date.getFullYear() < 1){
+          if(lastLogonDateObj.getMonth() - date.getMonth() < 1){
+            if(lastLogonDateObj.getDate() - date.getDate() < 1){
+              setLogonDate(uid, Date.now());
+              console.log("no date change needed")
+            } else {
+              setLogonDate(uid, Date.now());
+              createGoal(uid, "use a bicycle instead of driving", "a");
+              createGoal(uid, "put something in the recycling bin", "l");
+              createGoal(uid, "don't use a disposable plastic waterbottle", "w");
+              createGoal(uid, "walk outside for at least 15 mins", "l");
+            }
+          } else {
+            setLogonDate(uid, Date.now());
+            createGoal(uid, "use a bicycle instead of driving", "a");
+            createGoal(uid, "put something in the recycling bin", "l");
+            createGoal(uid, "don't use a disposable plastic waterbottle", "w");
+            createGoal(uid, "walk outside for at least 15 mins", "l");
+          }
+        } else {
+          setLogonDate(uid, Date.now());
+          createGoal(uid, "use a bicycle instead of driving", "a");
+          createGoal(uid, "put something in the recycling bin", "l");
+          createGoal(uid, "don't use a disposable plastic waterbottle", "w");
+          createGoal(uid, "walk outside for at least 15 mins", "l");
+        }
     }
   } else {
     // User is signed out.
