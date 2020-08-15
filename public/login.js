@@ -31,20 +31,19 @@ firebase.auth().onAuthStateChanged(function (user) {
       .removeEventListener("click", signIn);
     document.getElementById("login-button").addEventListener("click", signOut);
     getLogonDate(uid).then(snap => {
-      lastLogon = snap.val().lastLogon;
-      console.log(lastLogon);
-      if(lastLogon == null){
+      if(snap.val() == null){
         // initialize account
         createGoal(uid, "use a bicycle instead of driving", "a");
         createGoal(uid, "put something in the recycling bin", "l");
         createGoal(uid, "don't use a disposable plastic waterbottle", "w");
         createGoal(uid, "walk outside for at least 15 mins", "l");
-        createEcosystemState(uid, "trees", 5);
-        createEcosystemState(uid, "clouds", 5);
-        createEcosystemState(uid, "lake", 5);
+        createEcosystemState(uid, "trees", 3);
+        createEcosystemState(uid, "clouds", 3);
+        createEcosystemState(uid, "lake", 3);
         setLogonDate(uid, Date.now());
       } else {
         // check if its been one day since last logon
+        lastLogon = snap.val().lastLogon;
         console.log(lastLogon);
         let currentDate = new Date();
         // divide by 86400000 (milliseconds in a day) and round down to get days past since 1970 00:00:00 UTC
@@ -56,6 +55,9 @@ firebase.auth().onAuthStateChanged(function (user) {
               changeGoal(uid, goal, "false");
             }
           });
+          changeEcosystemState(uid, "trees", -3);
+          changeEcosystemState(uid, "clouds", -3);
+          changeEcosystemState(uid, "lake", -3);
         }
         setLogonDate(uid, currentDate);
       }
@@ -67,8 +69,9 @@ firebase.auth().onAuthStateChanged(function (user) {
           innerHTML += '<li class="list-group-item each-card" style="background-color: lightgray;">' + goal + '<input id="' + goalID + '" class="ml-2" type="checkbox" style="float: right;" onchange="onChanged(this)"' + (data[goal].complete == true ? 'checked' : '') + '></li>';
         }
         document.getElementById("goals").innerHTML = innerHTML;
-        document.getElementById("add").innerHTML = '<input type="text" id="userGoal"><button type="submit" onclick="addGoal()" >Add Goal</button>';
       });
+      document.getElementById("add").innerHTML = '<input type="text" id="userGoal"><button type="submit" onclick="addGoal()" >Add Goal</button>';
+      loadImages(uid);
     });
   } else {
     // User is signed out.
@@ -79,6 +82,9 @@ firebase.auth().onAuthStateChanged(function (user) {
     document.getElementById("login-button").addEventListener("click", signIn);
     document.getElementById("goals").innerHTML = "Log in to view your goals!";
     document.getElementById("add").innerHTML = "";
+    document.getElementById("clouds").src = "";
+    document.getElementById("trees").src = "";
+    document.getElementById("pond").src = "";
   }
 });
 
