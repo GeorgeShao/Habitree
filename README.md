@@ -10,8 +10,10 @@
 ####
 
 ### Technologies used:
-#### HTML, CSS, JS (Front-end)
-#### Firebase (Back-end)
+
+#### HTML, CSS, JS (Front-end) \ 
+Firebase (Back-end) 
+####
 
 ### Created by: George, Andrew, Jagan, Rebecca
 ### https://habitree-d839f.web.app/
