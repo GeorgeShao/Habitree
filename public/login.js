@@ -71,7 +71,7 @@ firebase.auth().onAuthStateChanged(function (user) {
         }
         document.getElementById("goals").innerHTML = innerHTML;
       });
-      document.getElementById("add").innerHTML = '<input type="text" id="userGoal"><button type="submit" onclick="addGoal()" >Add Goal</button>';
+      document.getElementById("add").innerHTML = '<input type="text" id="userGoal" style="width: 317px;"><button type="submit" onclick="addGoal()" >Add Goal</button>';
       loadImages(uid);
     });
   } else {
