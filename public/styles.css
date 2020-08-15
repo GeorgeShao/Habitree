@@ -7,6 +7,11 @@
   margin: 0 auto;
 }
 
+.login {
+  display: table;
+  margin: 0 auto;
+}
+
 /* .each-card {
   background-color: lightgray;
   float: right;
