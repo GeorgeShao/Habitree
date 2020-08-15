@@ -16,33 +16,21 @@
   list-style-type: none;
 }
 
+.clouds {
+  width: 100%;
+}
+
 .pond{
-  width: 120px;
-  background-position: right bottom;
-}
-.cloud{
-  width: 40px;
-  background-position: right top;
-}
-
-.cow{
-  width: 40px;
-  background-position: right bottom;
-}
-
-.dead_Tree{
-  width: 40px;
-  background-position: bottom;
+  width: 38%;
+  position: absolute;
+  bottom: 100px;
 }
 
 .tree{
-  width: 40px;
-  background-position: left bottom;
+  width: 20%;
+  height: 50%;
+  position: absolute;
+  bottom: 100px;
+  right: 100px;
 }
-
-.healthy_Tree{
-  width: 120px;
-  background-position: left bottom;
-}
-
 
