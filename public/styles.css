@@ -2,6 +2,17 @@
   color: lightgray;
 }
 
+.goal-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* .each-card {
+  background-color: lightgray;
+  float: right;
+} */
+
 .goals {
   list-style-type: none;
 }
@@ -35,7 +46,4 @@
   background-position: left bottom;
 }
 
-/* .each-card {
-  margin-top: 5px;
-  border-radius: 5px;
-} */
+
