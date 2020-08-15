@@ -50,24 +50,24 @@ firebase.auth().onAuthStateChanged(function (user) {
               console.log("no date change needed")
             } else {
               setLogonDate(uid, Date.now());
-              createGoal(uid, "use a bicycle instead of driving", "a");
-              createGoal(uid, "put something in the recycling bin", "l");
-              createGoal(uid, "don't use a disposable plastic waterbottle", "w");
-              createGoal(uid, "walk outside for at least 15 mins", "l");
+              changeGoal(uid, "use a bicycle instead of driving", "false");
+              changeGoal(uid, "put something in the recycling bin", "false");
+              changeGoal(uid, "don't use a disposable plastic waterbottle", "false");
+              changeGoal(uid, "walk outside for at least 15 mins", "false");
             }
           } else {
             setLogonDate(uid, Date.now());
-            createGoal(uid, "use a bicycle instead of driving", "a");
-            createGoal(uid, "put something in the recycling bin", "l");
-            createGoal(uid, "don't use a disposable plastic waterbottle", "w");
-            createGoal(uid, "walk outside for at least 15 mins", "l");
+            changeGoal(uid, "use a bicycle instead of driving", "false");
+            changeGoal(uid, "put something in the recycling bin", "false");
+            changeGoal(uid, "don't use a disposable plastic waterbottle", "false");
+            changeGoal(uid, "walk outside for at least 15 mins", "false");
           }
         } else {
           setLogonDate(uid, Date.now());
-          createGoal(uid, "use a bicycle instead of driving", "a");
-          createGoal(uid, "put something in the recycling bin", "l");
-          createGoal(uid, "don't use a disposable plastic waterbottle", "w");
-          createGoal(uid, "walk outside for at least 15 mins", "l");
+          changeGoal(uid, "use a bicycle instead of driving", "false");
+          changeGoal(uid, "put something in the recycling bin", "false");
+          changeGoal(uid, "don't use a disposable plastic waterbottle", "false");
+          changeGoal(uid, "walk outside for at least 15 mins", "false");
         }
     }
     document.getElementById("goals").innerHTML = getGoals(uid);
