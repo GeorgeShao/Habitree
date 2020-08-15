@@ -48,29 +48,39 @@ firebase.auth().onAuthStateChanged(function (user) {
         let currentDate = new Date();
         // divide by 86400000 (milliseconds in a day) and round down to get days past since 1970 00:00:00 UTC
         // if different day, reset goals
-        let diff = Math.floor(currentDate/86400000) - Math.floor(lastLogon/86400000)
+        let diff = Math.floor(currentDate/86400000) - Math.floor(lastLogon/86400000);
         if (diff > 0) {
           getGoals(uid).then(snap => {
             let data = snap.val();
             for (var goal in data) {
               changeGoal(uid, goal, "false");
             }
+            getGoals(uid).then(snap => {
+              var innerHTML = "";
+              let data = snap.val();
+              for (var goal in data) {
+                let goalID = goal.replace(/ /g, "-");
+                innerHTML += '<li class="list-group-item each-card" style="background-color: lightgray;">' + goal + '<input id="' + goalID + '" class="ml-2" type="checkbox" style="float: right;" onchange="onChanged(this)"' + (data[goal].complete == true ? 'checked' : '') + '></li>';
+              }
+              document.getElementById("goals").innerHTML = innerHTML;
+            });
           });
           changeEcosystemState(uid, "trees", -3*diff);
           changeEcosystemState(uid, "clouds", -3*diff);
           changeEcosystemState(uid, "lake", -3*diff);
+        }else {
+          getGoals(uid).then(snap => {
+            var innerHTML = "";
+            let data = snap.val();
+            for (var goal in data) {
+              let goalID = goal.replace(/ /g, "-");
+              innerHTML += '<li class="list-group-item each-card" style="background-color: lightgray;">' + goal + '<input id="' + goalID + '" class="ml-2" type="checkbox" style="float: right;" onchange="onChanged(this)"' + (data[goal].complete == true ? 'checked' : '') + '></li>';
+            }
+            document.getElementById("goals").innerHTML = innerHTML;
+          });
         }
         setLogonDate(uid, currentDate);
       }
-      getGoals(uid).then(snap => {
-        var innerHTML = "";
-        let data = snap.val();
-        for (var goal in data) {
-          let goalID = goal.replace(/ /g, "-");
-          innerHTML += '<li class="list-group-item each-card" style="background-color: lightgray;">' + goal + '<input id="' + goalID + '" class="ml-2" type="checkbox" style="float: right;" onchange="onChanged(this)"' + (data[goal].complete == true ? 'checked' : '') + '></li>';
-        }
-        document.getElementById("goals").innerHTML = innerHTML;
-      });
       document.getElementById("add").innerHTML = '<input type="text" id="userGoal" style="width: 317px;"><button type="submit" onclick="addGoal()" >Add Goal</button>';
       loadImages(uid);
     });
