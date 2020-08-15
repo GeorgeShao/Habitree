@@ -34,6 +34,11 @@ firebase.auth().onAuthStateChanged(function (user) {
         createGoal(uid, "put something in the recycling bin", "l");
         createGoal(uid, "don't use a disposable plastic waterbottle", "w");
         createGoal(uid, "walk outside for at least 15 mins", "l");
+        createEcosystemState(uid, "trees", 5);
+        createEcosystemState(uid, "clouds", 5);
+        createEcosystemState(uid, "lake", 5);
+        setLogonDate(uid, Date.now());
+        //console.log("logon (login.js): " + getLogonDate(uid));
     } else {
         // check if its been one day since last logon
     }

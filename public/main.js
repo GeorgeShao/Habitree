@@ -12,7 +12,7 @@ firebase.initializeApp(firebaseConfig);
 
 function completeGoal(userID, goalName) {
     var update = {};
-    update['complete'] = true;
+    update['/complete'] = true;
     firebase.database().ref('users/' + userID + '/goals/' + goalName).update(update);
 };
 
@@ -31,23 +31,35 @@ function createGoal(userID, goalName, goalType) {
 
 function changeEcosystemState(userID, stateName, value) {
     firebase.database().ref('users/' + userID + '/ecosystemState/' + stateName).once('value').then( snap => {
-        let currentValue = snap.val();
+        let currentValue = snap.val().value;
         var updates = {};
         updates[stateName] = value+currentValue;
         firebase.database().ref('users/' + userID + '/ecosystemState').update(updates);
     });
 };
 
-function getLogonDate(userID) {
-    firebase.database().ref('users/' + userID).once('value').then( snap => {
-        return snap.val();
+function createEcosystemState(userID, stateName, value) {
+    firebase.database().ref('users/' + userID + '/ecosystemState/' + stateName).set({
+        'value' : value
     });
+}
+
+//DOESN'T WORK
+function getLogonDate(userID) {
+    var ret;
+    firebase.database().ref('users/' + userID).once('value').then(snap => {
+        ret = snap.val().lastLogon;
+        console.log("last logon (callback): " + ret);
+    });
+    console.log("last logon (main.js): " + ret);
+    return ret;
 };
 
 function setLogonDate(userID, date) {
     var update = {};
-    update['lastLogon'] = date;
+    update['/lastLogon'] = date;
     firebase.database().ref('users/' + userID).update(update);
+    console.log("set logon");
 };
 
 firebase.database().ref('/').on('value', snap => {
