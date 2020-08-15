@@ -10,9 +10,9 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 
-function completeGoal(userID, goalName) {
+function changeGoal(userID, goalName, value) {
     var update = {};
-    update['/complete'] = true;
+    update['/complete'] = value;
     firebase.database().ref('users/' + userID + '/goals/' + goalName).update(update);
 };
 
@@ -23,11 +23,20 @@ function createGoal(userID, goalName, goalType) {
     });
 };
 
-/*function getGoals(userID) {
-    firebase.database().ref('users/' + userID + '/goals/').once('value').then( snap => {
-        
+function getGoals(userID) {
+
+    var innerHTML = "";
+
+    firebase.database().ref('users/' + userID + '/goals').once('value').then(snap => {
+        for (var goal in snap.val()) {
+            console.log(goal);
+            //innerHTML += '<li class="list-group-item align-items-center"><input class="ml-2" type="checkbox" style="float:left;"><p style="float:right;">'+goal+'</p></li>';
+        }
     });
-}*/
+    setTimeout(function() {
+        return innerHTML;
+    }, 3000);
+}
 
 function changeEcosystemState(userID, stateName, value) {
     firebase.database().ref('users/' + userID + '/ecosystemState/' + stateName).once('value').then( snap => {
@@ -44,17 +53,14 @@ function createEcosystemState(userID, stateName, value) {
     });
 }
 
-//DOESN'T WORK
 function getLogonDate(userID) {
     var ret;
     
     firebase.database().ref('users/' + userID).once('value').then(snap => {
         ret = snap.val().lastLogon;
-        console.log("last logon (callback): " + ret);
     });
     
     setTimeout(function() {
-        console.log("last logon (main.js): " + ret);
         return ret;
     }, 500);
 };
@@ -63,7 +69,6 @@ function setLogonDate(userID, date) {
     var update = {};
     update['/lastLogon'] = date;
     firebase.database().ref('users/' + userID).update(update);
-    console.log("set logon");
 };
 
 firebase.database().ref('/').on('value', snap => {

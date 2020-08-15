@@ -38,10 +38,10 @@ firebase.auth().onAuthStateChanged(function (user) {
         createEcosystemState(uid, "clouds", 5);
         createEcosystemState(uid, "lake", 5);
         setLogonDate(uid, Date.now());
-        //console.log("logon (login.js): " + getLogonDate(uid));
     } else {
         // check if its been one day since last logon
     }
+    document.getElementById("goals").innerHTML = getGoals(uid);
   } else {
     // User is signed out.
     document.getElementById("login-button").innerHTML = loginBtnHtml;
