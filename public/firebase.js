@@ -34,7 +34,7 @@ function changeEcosystemState(userID, stateName, value) {
     firebase.database().ref('users/' + userID + '/ecosystemState/' + stateName).once('value').then( snap => {
         let currentValue = snap.val().value;
         var updates = {};
-        updates[stateName] = value+currentValue;
+        updates[stateName] = max(0, min(10, value+currentValue));
         firebase.database().ref('users/' + userID + '/ecosystemState').update(updates);
     });
 };
