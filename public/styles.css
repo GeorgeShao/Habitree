@@ -3,9 +3,8 @@
 }
 
 .goal-title {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: table;
+  margin: 0 auto;
 }
 
 /* .each-card {
