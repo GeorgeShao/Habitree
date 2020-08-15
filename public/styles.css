@@ -21,13 +21,13 @@
   width: 100%;
 }
 
-.pond{
+.pond{  
   width: 38%;
-  position: absolute;
+  position: absolute; 
   bottom: 100px;
 }
 
-.tree{
+.trees{
   width: 20%;
   height: 50%;
   position: absolute;
