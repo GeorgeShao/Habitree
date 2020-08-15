@@ -24,18 +24,7 @@ function createGoal(userID, goalName, goalType) {
 };
 
 function getGoals(userID) {
-
-    var innerHTML = "";
-
-    firebase.database().ref('users/' + userID + '/goals').once('value').then(snap => {
-        for (var goal in snap.val()) {
-            console.log(goal);
-            //innerHTML += '<li class="list-group-item align-items-center"><input class="ml-2" type="checkbox" style="float:left;"><p style="float:right;">'+goal+'</p></li>';
-        }
-    });
-    setTimeout(function() {
-        return innerHTML;
-    }, 3000);
+    return firebase.database().ref('users/' + userID + '/goals').once('value');
 }
 
 function changeEcosystemState(userID, stateName, value) {
@@ -54,15 +43,7 @@ function createEcosystemState(userID, stateName, value) {
 }
 
 function getLogonDate(userID) {
-    var ret;
-    
-    firebase.database().ref('users/' + userID).once('value').then(snap => {
-        ret = snap.val().lastLogon;
-    });
-    
-    setTimeout(function() {
-        return ret;
-    }, 500);
+    return firebase.database().ref('users/' + userID).once('value');
 };
 
 function setLogonDate(userID, date) {
