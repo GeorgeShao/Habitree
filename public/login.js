@@ -28,7 +28,8 @@ firebase.auth().onAuthStateChanged(function (user) {
       .getElementById("login-button")
       .removeEventListener("click", signIn);
     document.getElementById("login-button").addEventListener("click", signOut);
-    if(getLogonDate(uid) == null){
+    getLogonDate(uid).then(snap => {
+      if(snap.val().lastLogon == null){
         // initialize account
         createGoal(uid, "use a bicycle instead of driving", "a");
         createGoal(uid, "put something in the recycling bin", "l");
@@ -38,10 +39,45 @@ firebase.auth().onAuthStateChanged(function (user) {
         createEcosystemState(uid, "clouds", 5);
         createEcosystemState(uid, "lake", 5);
         setLogonDate(uid, Date.now());
-    } else {
+      } else {
         // check if its been one day since last logon
-    }
-    document.getElementById("goals").innerHTML = getGoals(uid);
+        lastLogonDateObj = new Date(snap.val().lastLogon * 1000)
+        date = Date.now()
+        if(lastLogonDateObj.getFullYear() - date.getFullYear() < 1){
+          if(lastLogonDateObj.getMonth() - date.getMonth() < 1){
+            if(lastLogonDateObj.getDate() - date.getDate() < 1){
+              setLogonDate(uid, Date.now());
+              console.log("no goal change needed")
+            } else {
+              setLogonDate(uid, Date.now());
+              changeGoal(uid, "use a bicycle instead of driving", "false");
+              changeGoal(uid, "put something in the recycling bin", "false");
+              changeGoal(uid, "don't use a disposable plastic waterbottle", "false");
+              changeGoal(uid, "walk outside for at least 15 mins", "false");
+            }
+          } else {
+            setLogonDate(uid, Date.now());
+            changeGoal(uid, "use a bicycle instead of driving", "false");
+            changeGoal(uid, "put something in the recycling bin", "false");
+            changeGoal(uid, "don't use a disposable plastic waterbottle", "false");
+            changeGoal(uid, "walk outside for at least 15 mins", "false");
+          }
+        } else {
+          setLogonDate(uid, Date.now());
+          changeGoal(uid, "use a bicycle instead of driving", "false");
+          changeGoal(uid, "put something in the recycling bin", "false");
+          changeGoal(uid, "don't use a disposable plastic waterbottle", "false");
+          changeGoal(uid, "walk outside for at least 15 mins", "false");
+        }
+      }
+      getGoals(uid).then(snap => {
+        var innerHTML = "";
+        for (var goal in snap.val()) {
+          innerHTML += '<li class="list-group-item align-items-center"><input class="ml-2" type="checkbox" style="float:left;"><p style="float:right;">'+goal+'</p></li>';
+        }
+        document.getElementById("goals").innerHTML = innerHTML;
+      });
+    });
   } else {
     // User is signed out.
     document.getElementById("login-button").innerHTML = loginBtnHtml;
@@ -51,4 +87,5 @@ firebase.auth().onAuthStateChanged(function (user) {
     document.getElementById("login-button").addEventListener("click", signIn);
   }
 });
+
 
