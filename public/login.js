@@ -64,9 +64,10 @@ firebase.auth().onAuthStateChanged(function (user) {
         let data = snap.val();
         for (var goal in data) {
           let goalID = goal.replace(/ /g, "-");
-          innerHTML += '<li class="list-group-item align-items-center"><input id="' + goalID + '" class="ml-2" type="checkbox" onchange="onChanged(this)" style="float:left;"' + (data[goal].complete == true ? 'checked' : '') +'><p style="float:right;">'+goalID+'</p></li>';
+          innerHTML += '<li class="list-group-item each-card" style="background-color: lightgray;">' + goal + '<input id="' + goalID + '" class="ml-2" type="checkbox" style="float: right;" onchange="onChanged(this)"' + (data[goal].complete == true ? 'checked' : '') + '></li>';
         }
         document.getElementById("goals").innerHTML = innerHTML;
+        document.getElementById("add").innerHTML = '<input type="text" id="userGoal"><button type="submit" onclick="addGoal()" >Add Goal</button>';
       });
     });
   } else {
@@ -76,6 +77,8 @@ firebase.auth().onAuthStateChanged(function (user) {
       .getElementById("login-button")
       .removeEventListener("click", signOut);
     document.getElementById("login-button").addEventListener("click", signIn);
+    document.getElementById("goals").innerHTML = "Log in to view your goals!";
+    document.getElementById("add").innerHTML = "";
   }
 });
 

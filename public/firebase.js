@@ -21,6 +21,9 @@ function createGoal(userID, goalName, goalType) {
         'complete' : false,
         'type': goalType
     });
+    let goalID = goalName.replace(/ /g, "-");
+    let innerHTML = '<li class="list-group-item each-card" style="background-color: lightgray;">' + goalName + '<input id="' + goalID + '" class="ml-2" type="checkbox" style="float: right;" onchange="onChanged(this)"></li>';
+    document.getElementById("goals").innerHTML += innerHTML;
 };
 
 function getGoals(userID) {
