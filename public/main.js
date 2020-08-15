@@ -47,12 +47,16 @@ function createEcosystemState(userID, stateName, value) {
 //DOESN'T WORK
 function getLogonDate(userID) {
     var ret;
+    
     firebase.database().ref('users/' + userID).once('value').then(snap => {
         ret = snap.val().lastLogon;
         console.log("last logon (callback): " + ret);
     });
-    console.log("last logon (main.js): " + ret);
-    return ret;
+    
+    setTimeout(function() {
+        console.log("last logon (main.js): " + ret);
+        return ret;
+    }, 500);
 };
 
 function setLogonDate(userID, date) {
