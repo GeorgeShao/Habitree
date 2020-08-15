@@ -70,6 +70,7 @@ firebase.auth().onAuthStateChanged(function (user) {
           createGoal(uid, "walk outside for at least 15 mins", "l");
         }
     }
+    document.getElementById("goals").innerHTML = getGoals(uid);
   } else {
     // User is signed out.
     document.getElementById("login-button").innerHTML = loginBtnHtml;
