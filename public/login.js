@@ -48,16 +48,17 @@ firebase.auth().onAuthStateChanged(function (user) {
         let currentDate = new Date();
         // divide by 86400000 (milliseconds in a day) and round down to get days past since 1970 00:00:00 UTC
         // if different day, reset goals
-        if (Math.floor(currentDate/86400000) != Math.floor(lastLogon/86400000)) {
+        let diff = Math.floor(currentDate/86400000) - Math.floor(lastLogon/86400000)
+        if (diff > 0) {
           getGoals(uid).then(snap => {
             let data = snap.val();
             for (var goal in data) {
               changeGoal(uid, goal, "false");
             }
           });
-          changeEcosystemState(uid, "trees", -3);
-          changeEcosystemState(uid, "clouds", -3);
-          changeEcosystemState(uid, "lake", -3);
+          changeEcosystemState(uid, "trees", -3*diff);
+          changeEcosystemState(uid, "clouds", -3*diff);
+          changeEcosystemState(uid, "lake", -3*diff);
         }
         setLogonDate(uid, currentDate);
       }
