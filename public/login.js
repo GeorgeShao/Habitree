@@ -13,6 +13,8 @@ function signOut() {
   return firebase.auth().signOut();
 }
 
+let uid;
+
 firebase.auth().onAuthStateChanged(function (user) {
   if (user) {
     // User is signed in.
@@ -21,7 +23,7 @@ firebase.auth().onAuthStateChanged(function (user) {
     var emailVerified = user.emailVerified;
     var photoURL = user.photoURL;
     var isAnonymous = user.isAnonymous;
-    var uid = user.uid;
+    uid = user.uid;
     var providerData = user.providerData;
     document.getElementById("login-button").innerHTML = logoutBtnHtml;
     document
@@ -44,39 +46,25 @@ firebase.auth().onAuthStateChanged(function (user) {
       } else {
         // check if its been one day since last logon
         console.log(lastLogon);
-        let lastLogonDateObj = new Date(lastLogon * 1000)
         let currentDate = new Date();
-        if(lastLogonDateObj.getFullYear() - currentDate.getFullYear() < 1){
-          if(lastLogonDateObj.getMonth() - currentDate.getMonth() < 1){
-            if(lastLogonDateObj.getDate() - currentDate.getDate() < 1){
-              setLogonDate(uid, Date.now());
-              console.log("no goal change needed")
-            } else {
-              setLogonDate(uid, Date.now());
-              changeGoal(uid, "use a bicycle instead of driving", "false");
-              changeGoal(uid, "put something in the recycling bin", "false");
-              changeGoal(uid, "don't use a disposable plastic waterbottle", "false");
-              changeGoal(uid, "walk outside for at least 15 mins", "false");
+        // divide by 86400000 (milliseconds in a day) and round down to get days past since 1970 00:00:00 UTC
+        // if different day, reset goals
+        if (Math.floor(currentDate/86400000) != Math.floor(lastLogon/86400000)) {
+          getGoals(uid).then(snap => {
+            let data = snap.val();
+            for (var goal in data) {
+              changeGoal(uid, goal, "false");
             }
-          } else {
-            setLogonDate(uid, Date.now());
-            changeGoal(uid, "use a bicycle instead of driving", "false");
-            changeGoal(uid, "put something in the recycling bin", "false");
-            changeGoal(uid, "don't use a disposable plastic waterbottle", "false");
-            changeGoal(uid, "walk outside for at least 15 mins", "false");
-          }
-        } else {
-          setLogonDate(uid, Date.now());
-          changeGoal(uid, "use a bicycle instead of driving", "false");
-          changeGoal(uid, "put something in the recycling bin", "false");
-          changeGoal(uid, "don't use a disposable plastic waterbottle", "false");
-          changeGoal(uid, "walk outside for at least 15 mins", "false");
+          });
         }
+        setLogonDate(uid, currentDate);
       }
       getGoals(uid).then(snap => {
         var innerHTML = "";
-        for (var goal in snap.val()) {
-          innerHTML += '<li class="list-group-item align-items-center"><input class="ml-2" type="checkbox" style="float:left;"><p style="float:right;">'+goal+'</p></li>';
+        let data = snap.val();
+        for (var goal in data) {
+          let goalID = goal.replace(/ /g, "-");
+          innerHTML += '<li class="list-group-item align-items-center"><input id="' + goalID + '" class="ml-2" type="checkbox" onchange="onChanged(this)" style="float:left;"' + (data[goal].complete == true ? 'checked' : '') +'><p style="float:right;">'+goalID+'</p></li>';
         }
         document.getElementById("goals").innerHTML = innerHTML;
       });
