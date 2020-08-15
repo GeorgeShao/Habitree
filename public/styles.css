@@ -34,7 +34,6 @@
   right: 100px;
 }
 
-<<<<<<< HEAD
 ul {
   margin: 0;
   padding: 0;
@@ -90,10 +89,11 @@ ul li {
   }
   
   .header {
-    background-color: #f44336;
+    background-color: #FFFAF0;
     padding: 30px 40px;
-    color: white;
+    color: black;
     text-align: center;
+    float: left;
   }
   
   .header:after {
@@ -128,5 +128,3 @@ ul li {
   .addBtn:hover {
     background-color: #bbb;
   }
-=======
->>>>>>> 606a3a65717e6893b165732590748214cc8a9e3c
