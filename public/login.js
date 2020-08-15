@@ -29,7 +29,9 @@ firebase.auth().onAuthStateChanged(function (user) {
       .removeEventListener("click", signIn);
     document.getElementById("login-button").addEventListener("click", signOut);
     getLogonDate(uid).then(snap => {
-      if(snap.val().lastLogon == null){
+      lastLogon = snap.val().lastLogon;
+      console.log(lastLogon);
+      if(lastLogon == null){
         // initialize account
         createGoal(uid, "use a bicycle instead of driving", "a");
         createGoal(uid, "put something in the recycling bin", "l");
@@ -41,11 +43,12 @@ firebase.auth().onAuthStateChanged(function (user) {
         setLogonDate(uid, Date.now());
       } else {
         // check if its been one day since last logon
-        lastLogonDateObj = new Date(snap.val().lastLogon * 1000)
-        date = Date.now()
-        if(lastLogonDateObj.getFullYear() - date.getFullYear() < 1){
-          if(lastLogonDateObj.getMonth() - date.getMonth() < 1){
-            if(lastLogonDateObj.getDate() - date.getDate() < 1){
+        console.log(lastLogon);
+        lastLogonDateObj = new Date(lastLogon * 1000)
+        currentDate = new Date();
+        if(lastLogonDateObj.getFullYear() - currentDate.getFullYear() < 1){
+          if(lastLogonDateObj.getMonth() - currentDate.getMonth() < 1){
+            if(lastLogonDateObj.getDate() - currentDate.getDate() < 1){
               setLogonDate(uid, Date.now());
               console.log("no goal change needed")
             } else {
