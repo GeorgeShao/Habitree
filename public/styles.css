@@ -6,6 +6,10 @@
   list-style-type: none;
 }
 
+.pond{
+  width: 120px;
+  background-position: right bottom;
+}
 .cloud{
   width: 40px;
   background-position: right top;
@@ -21,7 +25,7 @@
   background-position: bottom;
 }
 
-.ok_Tree{
+.tree{
   width: 40px;
   background-position: left bottom;
 }
@@ -31,10 +35,6 @@
   background-position: left bottom;
 }
 
-.pond{
-  width: 120px;
-  background-position: right bottom;
-}
 /* .each-card {
   margin-top: 5px;
   border-radius: 5px;
