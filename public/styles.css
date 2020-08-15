@@ -6,3 +6,32 @@
   list-style-type: none;
 }
 
+.cloud{
+  width: "120px";
+  background-position: right top;
+}
+
+.cow{
+  width: "120px";
+  background-position: right bottom;
+}
+
+.dead_Tree{
+  width: "120px";
+  background-position: bottom;
+}
+
+.ok_Tree{
+  width: "120px";
+  background-position: left bottom;
+}
+
+.healthy_Tree{
+  width: "120px";
+  background-position: left bottom;
+}
+
+.pond{
+  width: "120px";
+  background-position: right bottom;
+}
